@@ -1,0 +1,16 @@
+{
+  "canisters": {
+    "dapp_lista_pessoas_backend": {
+      "main": "src/dapp_lista_pessoas_backend/main.mo",
+      "type": "motoko"
+    }
+  },
+  "defaults": {
+    "build": {
+      "args": "",
+      "packtool": ""
+    }
+  },
+  "output_env_file": ".env",
+  "version": 1
+}
