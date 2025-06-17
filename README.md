@@ -1,59 +1,124 @@
-# `dapp_lista_pessoas`
+# DAPP Lista de Pessoas - Motoko
 
-Welcome to your new `dapp_lista_pessoas` project and to the Internet Computer development community. By default, creating a new project adds this README and some template files to your project directory. You can edit these template files to customize your project and to include your own code to speed up the development cycle.
+Este projeto faz parte da trilha educacional da Internet Computer, focado na prática do uso de **Buffers em Motoko**, uma estrutura dinâmica para manipular coleções de dados.  
+O objetivo é criar um backend simples que permita **adicionar e listar pessoas**, utilizando os conceitos aprendidos na documentação oficial do Motoko.
 
-To get started, you might want to explore the project directory structure and the default configuration file. Working with this project in your development environment will not affect any production deployment or identity tokens.
+---
 
-To learn more before you start working with `dapp_lista_pessoas`, see the following documentation available online:
+## 🚀 Funcionalidades
 
-- [Quick Start](https://internetcomputer.org/docs/current/developer-docs/setup/deploy-locally)
-- [SDK Developer Tools](https://internetcomputer.org/docs/current/developer-docs/setup/install)
-- [Motoko Programming Language Guide](https://internetcomputer.org/docs/current/motoko/main/motoko)
-- [Motoko Language Quick Reference](https://internetcomputer.org/docs/current/motoko/main/language-manual)
+- ✅ Adicionar nomes à lista de pessoas.
+- ✅ Listar todos os nomes cadastrados.
+- ✅ Aprendizado prático sobre Buffer, uma estrutura de dados dinâmica em Motoko.
 
-If you want to start working on your project right away, you might want to try the following commands:
+---
 
-```bash
-cd dapp_lista_pessoas/
-dfx help
-dfx canister --help
+## 🛠️ Tecnologias Utilizadas
+
+- Motoko
+- DFINITY SDK
+- Internet Computer (IC)
+- WSL + VS Code (ambiente de desenvolvimento)
+
+---
+
+## 📚 Fundamentação (Baseada na Documentação Oficial do Motoko)
+
+- **Buffer:** é uma estrutura de dados mutável, ideal para listas que precisam crescer dinamicamente.  
+- O Buffer permite adicionar elementos facilmente com `.add()` e, quando necessário, converter para Array usando `Buffer.toArray()`.
+
+🔗 Documentação oficial:  
+[https://internetcomputer.org/docs/current/developer-docs/backend/motoko/](https://internetcomputer.org/docs/current/developer-docs/backend/motoko/)
+
+---
+
+## 🔧 Estrutura do Código
+
+### ✅ Declaração do Buffer
+
+```motoko
+let pessoas = Buffer.Buffer<Text>(0);
 ```
 
-## Running the project locally
+### ✅ Função para adicionar pessoas
 
-If you want to test your project locally, you can use the following commands:
+```motoko
+public func adicionarPessoa(nomePessoa: Text) : async () {
+    pessoas.add(nomePessoa);
+};
+```
+
+### ✅ Função para listar pessoas
+
+```motoko
+public func listarPessoas() : async [Text] {
+    return Buffer.toArray(pessoas);
+};
+```
+
+---
+
+## 🖥️ Como Executar Localmente
+
+### ✅ Pré-requisitos
+
+- WSL instalado
+- DFINITY SDK instalado (`dfx`)
+- Git instalado
+
+### ✅ Passos
+
+1. Clone o repositório:
 
 ```bash
-# Starts the replica, running in the background
-dfx start --background
+git clone https://github.com/emanuelleLS/dapp_lista_pessoas.git
+cd dapp_lista_pessoas
+```
 
-# Deploys your canisters to the replica and generates your candid interface
+2. Inicie o ambiente da Internet Computer local:
+
+```bash
+dfx start --background
+```
+
+3. Implante o canister:
+
+```bash
 dfx deploy
 ```
 
-Once the job completes, your application will be available at `http://localhost:4943?canisterId={asset_canister_id}`.
+4. Acesse a interface Candid pelo link gerado no terminal para testar as funções `adicionarPessoa` e `listarPessoas`.
 
-If you have made changes to your backend canister, you can generate a new candid interface with
+---
 
-```bash
-npm run generate
+## 🔎 O que é `vec` no Candid UI?
+
+Quando você utiliza a função `listarPessoas()`, o Candid UI retorna algo como:
+
+```plaintext
+(vec {"Maria"; "João"})
 ```
 
-at any time. This is recommended before starting the frontend development server, and will be run automatically any time you run `dfx deploy`.
+✅ Isso significa um **array de textos**, onde `vec` é a notação de vetor (lista) usada no Candid.  
+É equivalente a:
 
-If you are making frontend changes, you can start a development server with
-
-```bash
-npm start
+```plaintext
+["Maria", "João"]
 ```
 
-Which will start a server at `http://localhost:8080`, proxying API requests to the replica at port 4943.
+---
 
-### Note on frontend environment variables
+## 🧠 Aprendizados Consolidando
 
-If you are hosting frontend code somewhere without using DFX, you may need to make one of the following adjustments to ensure your project does not fetch the root key in production:
+- Uso de Buffers em Motoko
+- Manipulação de listas dinâmicas
+- Conversão de Buffer para Array
+- Deploy e testes utilizando Candid UI
+- Integração entre ambiente local (WSL + VS Code) e o Internet Computer
 
-- set`DFX_NETWORK` to `ic` if you are using Webpack
-- use your own preferred method to replace `process.env.DFX_NETWORK` in the autogenerated declarations
-  - Setting `canisters -> {asset_canister_id} -> declarations -> env_override to a string` in `dfx.json` will replace `process.env.DFX_NETWORK` with the string in the autogenerated declarations
-- Write your own `createActor` constructor
+---
+
+## 📜 Licença
+
+Este projeto está licenciado sob a licença MIT.  
+Feito com ❤️ por [Emanuelle](https://github.com/emanuelleLS)
